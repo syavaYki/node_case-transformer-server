@@ -2,7 +2,7 @@ const http = require('http');
 const { convertToCase } = require('./convertToCase/convertToCase');
 
 function createServer() {
-  const valaidCases = ['SNAKE', 'KEBAB', 'CAMEL', 'PASCAL', 'UPPER'];
+  const validCases = ['SNAKE', 'KEBAB', 'CAMEL', 'PASCAL', 'UPPER'];
 
   return http.createServer((req, res) => {
     res.setHeader('Content-Type', 'application/json');
@@ -28,7 +28,7 @@ function createServer() {
       });
     }
 
-    if (!!toCase && !valaidCases.includes(toCase)) {
+    if (!!toCase && !validCases.includes(toCase)) {
       errors.push({
         message:
           // eslint-disable-next-line max-len
@@ -37,7 +37,7 @@ function createServer() {
     }
 
     if (errors.length) {
-      res.writeHead(400);
+      res.writeHead(400, 'Bad Request');
 
       res.end(JSON.stringify({ errors: errors }));
     } else {
